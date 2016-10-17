@@ -1,0 +1,25 @@
+{
+    "name" : "Vertacoo/simple-news-bundle",
+    "description" : "",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "simon",
+        "email" : "simon@vercors-net.com"
+    }],
+    "keywords" : [
+        ""
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Vertacoo\\SimpleNewsBundle" : ""
+        }
+    },
+    "target-dir" : "Vertacoo/SimpleNewsBundle",
+    "repositories" : [{
+    }]
+}
