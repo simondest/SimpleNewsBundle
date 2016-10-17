@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 
 class DefaultController extends Controller
@@ -19,19 +20,23 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $domain)
     {
         $newsService = $this->container->get('vertacoo_simple_news.news_controller');
+        if(!in_array($domain,$this->container->getParameter('vertacoo_simple_news.domains'))){
+            throw new Exception('Erreur, le domaine "'. $domain  . '" n\'existe pas.');
+        }
         $pathToNewsFile = $newsService->getDomainPath($domain);
         $defaultData = array(
             'news' => $newsService->getNews($domain)
         );
         
-        $form = $this->createFormBuilder($defaultData)
+        $form = $this->createFormBuilder($defaultData,['translation_domain' => 'VertacooSimpleNewsBundle'])
             ->add('news', TextareaType::class, array(
             'constraints' => new Length(array(
                 'min' => 3
-            ))
+            )),
+            'label' => 'vertacoo_simple_news.news'
         ))
             ->add('save', SubmitType::class, array(
-            'label' => 'Enregitrer le texte'
+            'label' => 'vertacoo_simple_news.save'
         ))
             ->getForm();
         
