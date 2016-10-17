@@ -5,4 +5,10 @@ services:
 services:
     vertacoo_simple_news.news_controller:
         class: Vertacoo\SimpleNewsBundle\Service\SimpleNews
-        arguments: ["%kernel.root_dir%/../var/","@Twig.loader"]
+        arguments: ["%kernel.root_dir%/../var/","@Twig.loader","%vertacoo_simple_news.domains%"]
+        
+    vertacoo_simple_news.twig.extension.news:
+        class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
+        tags:
+             - { name: 'twig.extension' }
+        arguments: ["@vertacoo_simple_news.news_controller"]

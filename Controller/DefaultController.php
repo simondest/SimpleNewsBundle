@@ -20,9 +20,8 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $domain)
     {
         $newsService = $this->container->get('vertacoo_simple_news.news_controller');
-        if(!in_array($domain,$this->container->getParameter('vertacoo_simple_news.domains'))){
-            throw new Exception('Erreur, le domaine "'. $domain  . '" n\'existe pas.');
-        }
+        
+        
         $pathToNewsFile = $newsService->getDomainPath($domain);
         $defaultData = array(
             'news' => $newsService->getNews($domain)
