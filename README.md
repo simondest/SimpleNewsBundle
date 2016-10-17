@@ -1,5 +1,17 @@
 # SimpleNewsBundle
 
+### Composer
+	"repositories": [
+        {
+	        "type" : "vcs",
+	        "url" : "https://github.com/simondest/SimpleNewsBundle.git"
+	    }
+    ]
+    "simondest/simple-news-bundle" : "dev-master"
+
+### AppKernel.php
+	new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
+
 ### Config :
 
 	vertacoo_simple_news:
