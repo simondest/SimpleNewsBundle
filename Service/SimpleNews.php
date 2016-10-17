@@ -9,13 +9,11 @@ class SimpleNews
 {
 
     private $path;
-    private $twigLoader;
     private $domains;
 
-    public function __construct($path,$twigLoader,$domains)
+    public function __construct($path,$domains)
     {
         $this->path = $path;
-        $this->twigLoader = $twigLoader;
         $this->domains = $domains;
     }
 
