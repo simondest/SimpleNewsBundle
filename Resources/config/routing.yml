@@ -1,7 +1,4 @@
-vertacoo_simple_news_homepage:
-    path:     /
-    defaults: { _controller: VertacooSimpleNewsBundle:Default:index }
-
 vertacoo_simple_news_admin:
     path:     /update/{domain}
-    defaults: { _controller: VertacooSimpleNewsBundle:Default:update }
+    defaults: { _controller: "VertacooSimpleNewsBundle:Default:update" }
+    
