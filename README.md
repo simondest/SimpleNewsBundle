@@ -23,7 +23,7 @@
 	    prefix:   /admin/news
 	    
 use :  
-	url('vertacoo_simple_news_admin',{'domain':'domain'})
+    url('vertacoo_simple_news_admin',{'domain':'domain'})
 
 ### Twig Extension
 	{{ vertacoo_news('domain') }}
