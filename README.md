@@ -22,7 +22,8 @@
 	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
 	    prefix:   /admin/news
 	    
-use :  url('vertacoo_simple_news_admin',{'domain':'domain'})
+use :  
+	url('vertacoo_simple_news_admin',{'domain':'domain'})
 
 ### Twig Extension
 	{{ vertacoo_news('domain') }}
