@@ -13,13 +13,16 @@
 	new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
 
 ### Config :
-
 	vertacoo_simple_news:
 	    domains: [domain]
 	    update_template: 'YourBundle:News:update.html.twig'
     
 ### Routing
-
 	vertacoo_simple_news:
 	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
 	    prefix:   /admin/news
+	    
+use :  url('vertacoo_simple_news_admin',{'domain':'domain'})
+
+### Twig Extension
+	{{ vertacoo_news('domain') }}
