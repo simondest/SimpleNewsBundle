@@ -1,0 +1,8 @@
+services:
+#    vertacoo_simple_news.example:
+#        class: Vertacoo\SimpleNewsBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+services:
+    vertacoo_simple_news.news_controller:
+        class: Vertacoo\SimpleNewsBundle\Service\SimpleNews
+        arguments: ["%kernel.root_dir%/../var/"]
