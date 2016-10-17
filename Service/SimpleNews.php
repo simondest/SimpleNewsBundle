@@ -8,10 +8,12 @@ class SimpleNews
 {
 
     private $path;
+    private $twigLoader;
 
-    public function __construct($path)
+    public function __construct($path,$twigLoader)
     {
         $this->path = $path;
+        $this->twigLoader = $twigLoader;
     }
 
     public function getNews($domain)

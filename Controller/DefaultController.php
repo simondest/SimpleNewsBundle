@@ -45,7 +45,7 @@ class DefaultController extends Controller
             
             $this->addFlash('success', 'Changements sauvegardés !');
         }
-        return $this->render('VertacooSimpleNewsBundle:Default:update.html.twig', array(
+        return $this->render($this->container->getParameter('vertacoo_simple_news.update_template'), array(
             'form' => $form->createView()
         ));
     }

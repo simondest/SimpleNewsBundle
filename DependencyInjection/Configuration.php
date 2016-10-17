@@ -20,13 +20,14 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vertacoo_simple_news');
         $rootNode->children()
-            ->arrayNode('domains')
-                ->prototype('scalar')
-            ->end()
-            ->defaultValue(array(
-            'Default'
-        ))
-            ->end();
+                        ->arrayNode('domains')
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'Default'
+                            ))
+                        ->end()
+                        ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->cannotBeEmpty()->end()
+                    ->end();
         
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
