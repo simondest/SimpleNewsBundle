@@ -19,7 +19,7 @@ class DefaultController extends Controller
 
     public function updateAction(Request $request, $domain)
     {
-        $newsService = $this->container->get('vertacoo_simple_news.news_controller');
+        $newsService = $this->container->get('vertacoo_simple_news.news_service');
         
         
         $pathToNewsFile = $newsService->getDomainPath($domain);

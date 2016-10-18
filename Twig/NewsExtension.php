@@ -1,8 +1,8 @@
 <?php
 namespace Vertacoo\SimpleNewsBundle\Twig;
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Vertacoo\SimpleNewsBundle\Service\SimpleNews;
+
 class NewsExtension extends \Twig_Extension
 {
 

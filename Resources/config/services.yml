@@ -1,9 +1,5 @@
 services:
-#    vertacoo_simple_news.example:
-#        class: Vertacoo\SimpleNewsBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
-services:
-    vertacoo_simple_news.news_controller:
+    vertacoo_simple_news.news_service:
         class: Vertacoo\SimpleNewsBundle\Service\SimpleNews
         arguments: ["%kernel.root_dir%/../var/","%vertacoo_simple_news.domains%"]
         
@@ -11,4 +7,4 @@ services:
         class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
         tags:
              - { name: 'twig.extension' }
-        arguments: ["@vertacoo_simple_news.news_controller"]
+        arguments: ["@vertacoo_simple_news.news_service"]
