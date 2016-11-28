@@ -21,10 +21,13 @@ class VertacooSimpleNewsExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        
         foreach ($config as $name => $node) {
             $container->setParameter('vertacoo_simple_news.' . $name, $node);
-        }
+        }       
+        
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
     }
 }

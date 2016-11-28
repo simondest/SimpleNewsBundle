@@ -21,7 +21,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('vertacoo_simple_news');
         $rootNode->children()
                         ->arrayNode('domains')
-                            ->prototype('scalar')->end()
+                            ->prototype('array')
+                                ->children()
+                                    ->booleanNode('use_images')->defaultFalse()->end()
+                                    ->integerNode('number')->defaultValue(1)->end()
+                                ->end()
+                            ->end()
                             ->defaultValue(array(
                                 'Default'
                             ))

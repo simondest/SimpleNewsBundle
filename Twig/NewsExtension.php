@@ -13,7 +13,6 @@ class NewsExtension extends \Twig_Extension
         $this->newsService = $newsService;
     }
 
-   
     public function getFunctions()
     {
         return array(
@@ -24,10 +23,10 @@ class NewsExtension extends \Twig_Extension
         );
     }
 
-    
-    public function news($domain)
+    public function news($domain, $what)
     {
-        return $this->newsService->getNews($domain);
+        $news = $this->newsService->getNews($domain);
+        return $news[$what];
     }
 
     public function getName()

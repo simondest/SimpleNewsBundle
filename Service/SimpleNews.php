@@ -9,9 +9,10 @@ class SimpleNews
 {
 
     private $path;
+
     private $domains;
 
-    public function __construct($path,$domains)
+    public function __construct($path, $domains)
     {
         $this->path = $path;
         $this->domains = $domains;
@@ -19,17 +20,18 @@ class SimpleNews
 
     public function getNews($domain)
     {
-        if(!$this->domainExists($domain)){
-            throw new Exception('Erreur, le domaine "'. $domain  . '" n\'existe pas.'); 
+        if (! $this->domainExists($domain)) {
+            throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
         }
-        $news = file_get_contents($this->getDomainPath($domain));
+        $news = array();
+        $news['text'] = file_get_contents($this->getDomainFile($domain));
         return $news;
     }
 
-    public function getDomainPath($domain)
+    public function getDomainFile($domain)
     {
-        if(!$this->domainExists($domain)){
-            throw new Exception('Erreur, le domaine "'. $domain  . '" n\'existe pas.');
+        if (! $this->domainExists($domain)) {
+            throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
         }
         $path = $this->path . $domain . '/news.txt';
         $fs = new Filesystem();
@@ -40,8 +42,27 @@ class SimpleNews
         
         return $path;
     }
-    private function domainExists($domain){
-        if(in_array($domain, $this->domains)){
+    
+    public function getDomainDirectory($domain)
+    {
+        if (! $this->domainExists($domain)) {
+            throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
+        }
+        $path = $this->path . $domain;
+    
+        return $path;
+    }
+    
+    public function getDomainConfig($domain){
+        if (! $this->domainExists($domain)) {
+            throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
+        }
+        return $this->domains[$domain];
+    }
+
+    private function domainExists($domain)
+    {
+        if (array_key_exists($domain, $this->domains)) {
             return true;
         }
         return false;
