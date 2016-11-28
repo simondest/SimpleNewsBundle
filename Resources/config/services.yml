@@ -8,3 +8,8 @@ services:
         tags:
              - { name: 'twig.extension' }
         arguments: ["@vertacoo_simple_news.news_service"]
+            
+    vertacoo_simple_news.image_type_extension:
+        class: Vertacoo\SimpleNewsBundle\Form\Extension\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }

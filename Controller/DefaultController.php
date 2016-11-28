@@ -6,13 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller
 {
@@ -29,7 +25,11 @@ class DefaultController extends Controller
         $defaultData = array(
             'news' => $news['text']
         );
-        
+        if ($config['use_images'] === true) {
+            for ($i = 1; $i <= $config['number']; $i ++) {
+                //$defaultData['thumb_image'][$i] = $i . '.jpeg';
+            }
+        }
         $form = $this->createFormBuilder($defaultData, [
             'translation_domain' => 'VertacooSimpleNewsBundle'
         ])
@@ -42,17 +42,13 @@ class DefaultController extends Controller
             ->getForm();
         
         if ($config['use_images'] === true) {
-            /*for ($i = 1; $i <= $config['number']; $i ++) {
+            for ($i = 1; $i <= $config['number']; $i ++) {
                 $form->add('image_' . $i, FileType::class, array(
                     'label' => 'Image ' . $i,
-                    'required' => false
+                    'required' => false,
+                    'image_path' => 'webPath'
                 ));
-            }*/
-            $form->add('image', CollectionType::class, array(
-                 'entry_type'   => FileType::class,
-                'required' => false,
-                'allow_add' => true
-            ));
+            }
         }
         
         $form->add('save', SubmitType::class, array(
@@ -62,8 +58,19 @@ class DefaultController extends Controller
         
         if ($form->isValid()) {
             $fs = new Filesystem();
-            $data = $form->getData();
-            var_dump($data);
+            if ($config['use_images'] === true) {
+                $data = $form->getData();
+                for ($i = 1; $i <= $config['number']; $i ++) {
+                    if (isset($data['image_' . $i])) {
+                        $file = $data['image_' . $i];
+                        $fileName = $i . '.' . $file->guessExtension();
+                        $file->move($newsService->getDomainDirectory($domain), $fileName);
+                    } else {
+                        continue;
+                    }
+                }
+            }
+            
             $fs->dumpFile($pathToNewsFile, $data['news']);
             
             $this->addFlash('success', 'Changements sauvegardés !');
