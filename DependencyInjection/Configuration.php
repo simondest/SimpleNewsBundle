@@ -20,6 +20,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vertacoo_simple_news');
         $rootNode->children()
+                        ->scalarNode('form')->defaultValue('Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType')->end()
+                        ->scalarNode('entity')->defaultValue('Vertacoo\SimpleNewsBundle\Entity\News')->end()
                         ->arrayNode('domains')
                             ->prototype('array')
                                 ->children()
@@ -32,6 +34,7 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->cannotBeEmpty()->end()
+                        ->scalarNode('upload_dir')->defaultValue('%kernel.root_dir%/../var/')->cannotBeEmpty()->end()
                     ->end();
         
         

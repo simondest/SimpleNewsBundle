@@ -1,15 +1,28 @@
 services:
     vertacoo_simple_news.news_service:
         class: Vertacoo\SimpleNewsBundle\Service\SimpleNews
-        arguments: ["%kernel.root_dir%/../var/","%vertacoo_simple_news.domains%"]
+        arguments: ["%vertacoo_simple_news.upload_dir%","%vertacoo_simple_news.domains%"]
         
-    vertacoo_simple_news.twig.extension.news:
-        class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
-        tags:
-             - { name: 'twig.extension' }
-        arguments: ["@vertacoo_simple_news.news_service"]
+    
             
     vertacoo_simple_news.image_type_extension:
         class: Vertacoo\SimpleNewsBundle\Form\Extension\ImageTypeExtension
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+            
+    vertacoo_simple_news.news_manager: 
+        class: Vertacoo\SimpleNewsBundle\Doctrine\NewsManager
+        arguments: ["@doctrine.orm.entity_manager", "%vertacoo_simple_news.entity%"]
+        
+        
+    vertacoo_simple_news.forms.news:
+        class: "%vertacoo_simple_news.form%"
+        arguments: ["%vertacoo_simple_news.entity%"]
+        tags:
+            - { name: form.type }
+            
+    vertacoo_simple_news.twig.extension.news:
+        class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
+        tags:
+             - { name: 'twig.extension' }
+        arguments: ["@vertacoo_simple_news.news_manager"]

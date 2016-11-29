@@ -1,16 +1,16 @@
 <?php
 namespace Vertacoo\SimpleNewsBundle\Twig;
 
-use Vertacoo\SimpleNewsBundle\Service\SimpleNews;
+use Vertacoo\SimpleNewsBundle\Doctrine\NewsManager;
 
 class NewsExtension extends \Twig_Extension
 {
 
-    protected $newsService;
+    protected $newsManager;
 
-    public function __construct(SimpleNews $newsService)
-    {
-        $this->newsService = $newsService;
+    public function __construct(NewsManager $newsManager)
+    {   
+        $this->newsManager = $newsManager;
     }
 
     public function getFunctions()
@@ -25,8 +25,9 @@ class NewsExtension extends \Twig_Extension
 
     public function news($domain, $what)
     {
-        $news = $this->newsService->getNews($domain);
-        return $news[$what];
+        $news = $this->newsManager->findOneByDomain($domain);
+        $field = 'get' . ucfirst($what);
+        return $news->$field();
     }
 
     public function getName()

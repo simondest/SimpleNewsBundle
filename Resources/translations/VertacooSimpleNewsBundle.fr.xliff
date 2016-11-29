@@ -2,13 +2,26 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 	<file source-language="en" datatype="plaintext" original="file.ext">
 		<body>
-			<trans-unit id="vertacoo_simple_news.news">
-				<source>vertacoo_simple_news.news</source>
-				<target>Nouvelle</target>
-			</trans-unit>
-			<trans-unit id="vertacoo_simple_news.save">
-				<source>vertacoo_simple_news.save</source>
+			
+			<trans-unit id="vertacoo_simple_news.label.save">
+				<source>vertacoo_simple_news.label.save</source>
 				<target>Enregistrer</target>
+			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.label.news.created">
+				<source>vertacoo_simplenews.label.news.created</source>
+				<target>Date de création</target>
+			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.label.news.title">
+				<source>vertacoo_simplenews.label.news.title</source>
+				<target>Titre</target>
+			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.label.news.body">
+				<source>vertacoo_simplenews.label.news.body</source>
+				<target>Texte</target>
+			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.flash.add">
+				<source>vertacoo_simplenews.flash.add</source>
+				<target>Enregistrement effectué</target>
 			</trans-unit>
 		</body>
 	</file>

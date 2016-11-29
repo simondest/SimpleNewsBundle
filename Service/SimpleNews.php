@@ -28,6 +28,14 @@ class SimpleNews
         return $news;
     }
 
+    public function getImage($domain, $image)
+    {
+        if (! $this->domainExists($domain)) {
+            throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
+        }
+        return $this->path . $image;
+    }
+
     public function getDomainFile($domain)
     {
         if (! $this->domainExists($domain)) {
@@ -42,18 +50,19 @@ class SimpleNews
         
         return $path;
     }
-    
+
     public function getDomainDirectory($domain)
     {
         if (! $this->domainExists($domain)) {
             throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
         }
         $path = $this->path . $domain;
-    
+        
         return $path;
     }
-    
-    public function getDomainConfig($domain){
+
+    public function getDomainConfig($domain)
+    {
         if (! $this->domainExists($domain)) {
             throw new Exception('Erreur, le domaine "' . $domain . '" n\'existe pas.');
         }
