@@ -16,5 +16,6 @@
 				<option name="default">default</option>
 			</options>
 		</field>
+		<field name="imageFileName" column="image_file_name" type="string" length="255" nullable="true" />
 	</mapped-superclass>
 </doctrine-mapping>

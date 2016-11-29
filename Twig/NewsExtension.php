@@ -26,8 +26,13 @@ class NewsExtension extends \Twig_Extension
     public function news($domain, $what)
     {
         $news = $this->newsManager->findOneByDomain($domain);
+        if( null=== $news){
+            return 'Auncune news pour ce domaine !';
+        }
         $field = 'get' . ucfirst($what);
         return $news->$field();
+        
+        
     }
 
     public function getName()

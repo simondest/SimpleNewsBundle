@@ -25,8 +25,10 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('domains')
                             ->prototype('array')
                                 ->children()
-                                    ->booleanNode('use_images')->defaultFalse()->end()
-                                    ->integerNode('number')->defaultValue(1)->end()
+                                    ->booleanNode('use_image')->defaultFalse()->end()
+                                    ->scalarNode('image_max_size')->defaultValue("1MO")->end()
+                                    ->integerNode('image_max_height')->defaultValue(600)->end()
+                                    ->integerNode('image_max_width')->defaultValue(800)->end()
                                 ->end()
                             ->end()
                             ->defaultValue(array(

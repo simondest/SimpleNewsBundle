@@ -22,5 +22,13 @@ interface NewsInterface
     public function getDomain();
     
     public function setDomain($domain);
+    
+    public function getImage();
+    
+    public function setImage($image);
+    
+    public function getImageFileName();
+    
+    public function setImageFileName($image);
 }
 

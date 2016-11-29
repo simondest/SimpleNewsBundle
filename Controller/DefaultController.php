@@ -18,34 +18,22 @@ class DefaultController extends Controller
         if(!$news){
             $news = $manager->build(null,null,$domain);
         }
-        $form = $this->createForm(NewsFormType::class, $news);
+        $domainConfig = $this->getParameter('vertacoo_simple_news.domains')[$domain];
+
+        $form = $this->createForm(NewsFormType::class, $news,array('domain_config'=>$domainConfig));
+        
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
+            $translator = $this->get('translator');
             if ($form->isValid()) {
                 $manager->persist($news);
-                $this->addFlash('success', 'vertacoo_simplenews.flash.add');
+                $this->addFlash('success', $translator->trans('vertacoo_simplenews.flash.add'));
+            }
+            else {
+                $this->addFlash('error', $translator->trans('vertacoo_simplenews.flash.failed'));
             }
         }
-       /* return array('form' => $form->createView());
-        if ($form->isValid()) {
-            $fs = new Filesystem();
-            if ($config['use_images'] === true) {
-                $data = $form->getData();
-                for ($i = 1; $i <= $config['number']; $i ++) {
-                    if (isset($data['image_' . $i])) {
-                        $file = $data['image_' . $i];
-                        $fileName = $i . '.' . $file->guessExtension();
-                        $file->move($newsService->getDomainDirectory($domain), $fileName);
-                    } else {
-                        continue;
-                    }
-                }
-            }
-            
-            $fs->dumpFile($pathToNewsFile, $data['news']);
-            
-            $this->addFlash('success', 'Changements sauvegardés !');
-        }*/
+       
         return $this->render($this->container->getParameter('vertacoo_simple_news.update_template'), array(
             'form' => $form->createView()
         ));

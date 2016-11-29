@@ -23,6 +23,10 @@
 				<source>vertacoo_simplenews.flash.add</source>
 				<target>Enregistrement effectué</target>
 			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.flash.failed">
+				<source>vertacoo_simplenews.flash.failed</source>
+				<target>Erreur lors de l'enregistrement, veuillez vérifier vos données.</target>
+			</trans-unit>
 			
 		</body>
 	</file>
