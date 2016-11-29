@@ -15,4 +15,4 @@ services:
         class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
         tags:
              - { name: 'twig.extension' }
-        arguments: ["@vertacoo_simple_news.news_manager"]
+        arguments: ["@vertacoo_simple_news.news_manager","@vich_uploader.templating.helper.uploader_helper"]

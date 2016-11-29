@@ -29,9 +29,9 @@ class NewsFormType extends AbstractType
             ->add('title', TextType::class, array(
             'label' => 'vertacoo_simplenews.label.news.title'
         ))
-            ->add('domain', TextType::class, array(
+       /*     ->add('domain', TextType::class, array(
             'label' => 'vertacoo_simplenews.label.news.domain'
-        ))
+        ))*/
             ->add('body', TextareaType::class, array(
             'label' => 'vertacoo_simplenews.label.news.body'
         ));
