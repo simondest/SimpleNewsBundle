@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsFormType extends AbstractType
 {
@@ -27,24 +29,32 @@ class NewsFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType');
         $builder->add('createdAt', DateTimeType::class, array(
             'label' => 'vertacoo_simplenews.label.news.created'
         ))
             ->add('title', TextType::class, array(
-            'label' => 'vertacoo_simplenews.label.news.title'
+            'label' => 'vertacoo_simplenews.label.news.title',
+            'constraints' => array(
+                new NotBlank()
+            )
         ))
        /*     ->add('domain', TextType::class, array(
             'label' => 'vertacoo_simplenews.label.news.domain'
         ))*/
             ->add('body', TextareaType::class, array(
-            'label' => 'vertacoo_simplenews.label.news.body'
+            'label' => 'vertacoo_simplenews.label.news.body',
+            'constraints' => array(
+                new NotBlank(),
+                new Length(array(
+                    'min' => 5
+                ))
+            )
         ));
         if ($options['domain_config']['use_image'] == true) {
             $helpMessage = $this->translator->trans('vertacoo_simplenews.help.news.image', array(
                 '%maxSize%' => $options['domain_config']["image_max_size"],
                 '%maxWidth%' => $options['domain_config']["image_max_width"],
-                '%maxHeight%' => $options['domain_config']["image_max_height"],
+                '%maxHeight%' => $options['domain_config']["image_max_height"]
             ));
             $builder->add('image', VichImageType::class, array(
                 'required' => false,
@@ -58,6 +68,28 @@ class NewsFormType extends AbstractType
                 'help' => $helpMessage
             ));
         }
+        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType', array(
+            'label' => 'vertacoo_simplenews.label.news.translation',
+            // 'locales' => array('en'),
+            'required' => false,
+            'fields' => array(
+                'title' => array(
+                    'constraints' => array(
+                        new Length(array(
+                            'min' => 5
+                        ))
+                    )
+                ),
+                'body' => array(
+                    'constraints' => array(
+                        new Length(array(
+                            'min' => 5
+                        ))
+                    )
+                )
+            )
+            
+        ));
         $builder->add('save', SubmitType::class, array(
             'label' => 'vertacoo_simple_news.label.save'
         ));

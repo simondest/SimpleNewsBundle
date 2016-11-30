@@ -19,6 +19,10 @@
 				<source>vertacoo_simplenews.label.news.body</source>
 				<target>Texte</target>
 			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.label.news.translation">
+				<source>vertacoo_simplenews.label.news.translation</source>
+				<target>Traductions</target>
+			</trans-unit>
 			<trans-unit id="vertacoo_simplenews.flash.add">
 				<source>vertacoo_simplenews.flash.add</source>
 				<target>Enregistrement effectué</target>

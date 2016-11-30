@@ -5,7 +5,7 @@ use Vertacoo\SimpleNewsBundle\Model\NewsInterface;
 
 class News implements NewsInterface
 {
-
+    
     protected $title;
 
     protected $body;
@@ -19,6 +19,8 @@ class News implements NewsInterface
     protected $imageFileName;
 
     protected $image;
+    
+    
 
     public function __construct()
     {
@@ -27,17 +29,24 @@ class News implements NewsInterface
 
     public function getTitle()
     {
+        if(null !== $this->translate()->getTitle()){
+            return $this->translate()->getTitle();
+        }
         return $this->title;
     }
 
     public function setTitle($title)
     {
+        
         $this->title = $title;
         return $this;
     }
 
     public function getBody()
     {
+       if(null !== $this->translate()->getBody()){
+           return $this->translate()->getBody();
+       }
         return $this->body;
     }
 
