@@ -20,11 +20,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vertacoo_simple_news');
         $rootNode->children()
-                        ->scalarNode('form')->defaultValue('Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType')->end()
                         ->scalarNode('entity')->defaultValue('Vertacoo\SimpleNewsBundle\Entity\News')->end()
                         ->arrayNode('domains')
                             ->prototype('array')
                                 ->children()
+                                    ->scalarNode('form')->defaultValue("Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType")->end()
                                     ->booleanNode('use_image')->defaultFalse()->end()
                                     ->scalarNode('image_max_size')->defaultValue("1MO")->end()
                                     ->integerNode('image_max_height')->defaultValue(600)->end()

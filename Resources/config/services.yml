@@ -6,7 +6,7 @@ services:
         
         
     vertacoo_simple_news.forms.news:
-        class: "%vertacoo_simple_news.form%"
+        class: Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
         arguments: ["%vertacoo_simple_news.entity%"]
         tags:
             - { name: form.type }
