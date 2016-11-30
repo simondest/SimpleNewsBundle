@@ -27,6 +27,7 @@ class NewsFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType');
         $builder->add('createdAt', DateTimeType::class, array(
             'label' => 'vertacoo_simplenews.label.news.created'
         ))
