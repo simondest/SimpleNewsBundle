@@ -1,0 +1,16 @@
+{% use 'VichUploaderBundle:Form:fields.html.twig' %}
+
+
+{% block form_row %}
+<div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+	{{- form_label(form) -}}
+	<div class="{{ block('form_group_class') }}">
+		{{- form_widget(form) -}}
+		{{- form_errors(form) -}}
+		{% if form.vars.help is defined and form.vars.help is not null %}
+		<span class="help-block"> {{ form.vars.help | raw }}</span>
+		{% endif %}
+	</div>
+	{##}
+</div>
+{% endblock form_row %}

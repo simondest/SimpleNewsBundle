@@ -27,6 +27,10 @@
 				<source>vertacoo_simplenews.flash.failed</source>
 				<target>Erreur lors de l'enregistrement, veuillez vérifier vos données.</target>
 			</trans-unit>
+			<trans-unit id="vertacoo_simplenews.help.news.image">
+				<source>vertacoo_simplenews.help.news.image</source>
+				<target><![CDATA[Tailles de l'image: Poids max %maxSize%, largeur max: %maxWidth% px, hauteur max: %maxHeight% px]]></target>
+			</trans-unit>
 			
 		</body>
 	</file>

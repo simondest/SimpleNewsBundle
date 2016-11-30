@@ -28,6 +28,7 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $manager->persist($news);
                 $this->addFlash('success', $translator->trans('vertacoo_simplenews.flash.add'));
+                return $this->redirect($request->getUri());
             }
             else {
                 $this->addFlash('error', $translator->trans('vertacoo_simplenews.flash.failed'));

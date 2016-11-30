@@ -10,15 +10,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Translation\Translator;
 
 class NewsFormType extends AbstractType
 {
 
     protected $class;
 
-    public function __construct($class)
+    protected $translator;
+
+    public function __construct($class, Translator $translator)
     {
         $this->class = $class;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -36,15 +40,21 @@ class NewsFormType extends AbstractType
             'label' => 'vertacoo_simplenews.label.news.body'
         ));
         if ($options['domain_config']['use_image'] == true) {
+            $helpMessage = $this->translator->trans('vertacoo_simplenews.help.news.image', array(
+                '%maxSize%' => $options['domain_config']["image_max_size"],
+                '%maxWidth%' => $options['domain_config']["image_max_width"],
+                '%maxHeight%' => $options['domain_config']["image_max_height"],
+            ));
             $builder->add('image', VichImageType::class, array(
                 'required' => false,
                 'constraints' => array(
                     new Image(array(
                         'maxSize' => $options['domain_config']["image_max_size"],
                         'maxHeight' => $options['domain_config']["image_max_height"],
-                        'maxWidth' => $options['domain_config']["image_max_width"],
+                        'maxWidth' => $options['domain_config']["image_max_width"]
                     ))
-                )
+                ),
+                'help' => $helpMessage
             ));
         }
         $builder->add('save', SubmitType::class, array(
