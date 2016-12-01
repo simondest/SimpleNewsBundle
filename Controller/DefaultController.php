@@ -3,8 +3,6 @@ namespace Vertacoo\SimpleNewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Filesystem\Filesystem;
-use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType;
 use Vertacoo\SimpleNewsBundle\Entity\News;
 
 class DefaultController extends Controller
