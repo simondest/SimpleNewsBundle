@@ -36,7 +36,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->cannotBeEmpty()->end()
-                        ->scalarNode('upload_dir')->defaultValue('%kernel.root_dir%/../var/')->cannotBeEmpty()->end()
                     ->end();
         
         

@@ -16,6 +16,7 @@ class DefaultController extends Controller
         if(!$news){
             $news = $manager->build(null,null,$domain);
         }
+        
         $domainConfig = $this->getParameter('vertacoo_simple_news.domains')[$domain];
 
         $form = $this->createForm($domainConfig['form'], $news,array('domain_config'=>$domainConfig));
