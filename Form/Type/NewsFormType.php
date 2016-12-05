@@ -4,6 +4,8 @@ namespace Vertacoo\SimpleNewsBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -92,6 +94,15 @@ class NewsFormType extends AbstractType
         ));
         $builder->add('save', SubmitType::class, array(
             'label' => 'vertacoo_simple_news.label.save'
+        ));
+    }
+    
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+    
+        $view->vars = array_merge($view->vars, array(
+            'domain_config' => $options['domain_config']
         ));
     }
 

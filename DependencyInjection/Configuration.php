@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->children()
                                     ->scalarNode('form')->defaultValue("Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType")->end()
+                                    ->scalarNode('title')->end()
                                     ->booleanNode('use_image')->defaultFalse()->end()
                                     ->scalarNode('image_max_size')->defaultValue("1MO")->end()
                                     ->integerNode('image_max_height')->defaultValue(600)->end()
