@@ -34,67 +34,9 @@ class NewsFormType extends AbstractType
     {
         $builder->add('createdAt', DateTimeType::class, array(
             'label' => 'vertacoo_simplenews.label.news.created'
-        ))
-            ->add('title', TextType::class, array(
-            'label' => 'vertacoo_simplenews.label.news.title',
-            'constraints' => array(
-                new NotBlank()
-            )
-        ))
+        ));
 
-            ->add('body', TextareaType::class, array(
-            'label' => 'vertacoo_simplenews.label.news.body',
-            'constraints' => array(
-                new NotBlank(),
-                new Length(array(
-                    'min' => 5
-                ))
-            )
-        ));
-           
-        if ($options['domain_config']['use_image'] == true) {
-            $helpMessage = $this->translator->trans('vertacoo_simplenews.help.news.image', array(
-                '%maxSize%' => $options['domain_config']["image_max_size"],
-                '%maxWidth%' => $options['domain_config']["image_max_width"],
-                '%maxHeight%' => $options['domain_config']["image_max_height"]
-            ));
-            $builder->add('image', VichImageType::class, array(
-                'required' => false,
-                'constraints' => array(
-                    new Image(array(
-                        'maxSize' => $options['domain_config']["image_max_size"],
-                        'maxHeight' => $options['domain_config']["image_max_height"],
-                        'maxWidth' => $options['domain_config']["image_max_width"]
-                    ))
-                ),
-                'help' => $helpMessage
-            ));
-        }
-        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType', array(
-            'label' => 'vertacoo_simplenews.label.news.translation',
-            // 'locales' => array('en'),
-            'required' => false,
-            'fields' => array(
-                'title' => array(
-                    'constraints' => array(
-                        new Length(array(
-                            'min' => 5
-                        ))
-                    )
-                ),
-                'body' => array(
-                    'constraints' => array(
-                        new Length(array(
-                            'min' => 5
-                        ))
-                    )
-                )
-            )
             
-        ));
-        $builder->add('save', SubmitType::class, array(
-            'label' => 'vertacoo_simple_news.label.save'
-        ));
     }
     
     public function buildView(FormView $view, FormInterface $form, array $options)

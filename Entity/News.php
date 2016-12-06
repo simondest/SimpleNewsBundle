@@ -6,9 +6,7 @@ use Vertacoo\SimpleNewsBundle\Model\NewsInterface;
 class News implements NewsInterface
 {
     
-    protected $title;
-
-    protected $body;
+    
 
     protected $createdAt;
 
@@ -16,9 +14,7 @@ class News implements NewsInterface
 
     protected $domain;
 
-    protected $imageFileName;
-
-    protected $image;
+    
     
     
 
@@ -27,34 +23,7 @@ class News implements NewsInterface
         $this->createdAt = new \DateTime();
     }
 
-    public function getTitle()
-    {
-        if(null !== $this->translate()->getTitle()){
-            return $this->translate()->getTitle();
-        }
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        
-        $this->title = $title;
-        return $this;
-    }
-
-    public function getBody()
-    {
-       if(null !== $this->translate()->getBody()){
-           return $this->translate()->getBody();
-       }
-        return $this->body;
-    }
-
-    public function setBody($body)
-    {
-        $this->body = $body;
-        return $this;
-    }
+   
 
     public function getCreatedAt()
     {
@@ -89,51 +58,7 @@ class News implements NewsInterface
         return $this;
     }
 
-    /**
-     *
-     * @return the $image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     *
-     * @param field_type $image            
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-        if ($image) {
-            $this->updatedAt = new \DateTime('now');
-        }
-        return $this;
-    }
-
-    /**
-     *
-     * @return the $image_filename
-     */
-    public function getImageFilename()
-    {
-        return $this->imageFileName;
-    }
-
-    /**
-     *
-     * @param field_type $image_filename            
-     */
-    public function setImageFilename($imageFileName)
-    {
-        $this->imageFileName = $imageFileName;
-        return $this;
-    }
-
-    public function getImageWebPath()
-    {
-        return 'truc';
-    }
+    
 }
 
 
