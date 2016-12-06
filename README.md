@@ -67,11 +67,6 @@
 	     */
 	    protected $body;
 	    
-	    /**
-	     * @ORM\Column(type="string", length=255)
-	     */
-	    protected $link;
-	    
 	    public function getTitle()
 	    {
 	        return $this->title;
@@ -95,6 +90,57 @@
 	    }
 	}
 
+## Create custom FormType
+If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
+
+#### FormType example :
+	namespace YourBundle\Form\Type;
+
+	use Symfony\Component\Form\FormBuilderInterface;
+	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+	use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType as BaseType;
+	
+	class YourFormType extends BaseType
+	{
+	
+	    public function buildForm(FormBuilderInterface $builder, array $options)
+	    {
+	        parent::buildForm($builder, $options);
+	        $builder->remove('createdAt');
+	        $builder->remove('title');
+	        $builder->remove('link');
+	        
+	        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType', array(
+	            'label' => 'vertacoo_simplenews.label.news.translation',
+	            // 'locales' => array('en'),
+	            'required' => false,
+	            'position' => array('before'=>'save'),
+	            'exclude_fields' => array('link','title')
+	            
+	        ));
+	        $builder->add('save', SubmitType::class, array(
+	            'label' => 'vertacoo_simple_news.label.save',
+	            'position' => 'last'
+	        ));
+	    }
+	
+	    /**
+	     *
+	     * {@inheritdoc}
+	     *
+	     */
+	    public function getName()
+	    {
+	        return 'example_news_form';
+	    }
+	}
+#### FormType service definition:
+	example.your_form_type:
+	    class: YourBundle\Form\Type\YourFormType
+	    tags:
+	        -  { name: form.type }
+	    arguments: ["%vertacoo_simple_news.entity%","@translator.default"]
+
 ## Config :
 ### SimpleNews
 	vertacoo_simple_news:
@@ -109,7 +155,7 @@
     update_template: 'HotelAdminBundle:News:update.html.twig'
 
 ### Vichuploader    
-Vichuploadr config:
+Vichuploader config:
 	vich_uploader:
 	    db_driver: orm
 	    mappings:

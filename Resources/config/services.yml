@@ -1,5 +1,8 @@
 services:
-     
+    vertacoo_simple_news.form_factory: 
+        class: Vertacoo\SimpleNewsBundle\Form\Factory\FormFactory
+        arguments: ['@form.factory',"%vertacoo_simple_news.domains%","@request_stack","@translator.default"]
+         
     vertacoo_simple_news.news_manager: 
         class: Vertacoo\SimpleNewsBundle\Doctrine\NewsManager
         arguments: ["@doctrine.orm.entity_manager", "%vertacoo_simple_news.entity%"]

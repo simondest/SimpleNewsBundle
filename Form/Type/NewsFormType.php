@@ -41,9 +41,7 @@ class NewsFormType extends AbstractType
                 new NotBlank()
             )
         ))
-       /*     ->add('domain', TextType::class, array(
-            'label' => 'vertacoo_simplenews.label.news.domain'
-        ))*/
+
             ->add('body', TextareaType::class, array(
             'label' => 'vertacoo_simplenews.label.news.body',
             'constraints' => array(
@@ -53,6 +51,7 @@ class NewsFormType extends AbstractType
                 ))
             )
         ));
+           
         if ($options['domain_config']['use_image'] == true) {
             $helpMessage = $this->translator->trans('vertacoo_simplenews.help.news.image', array(
                 '%maxSize%' => $options['domain_config']["image_max_size"],
@@ -127,7 +126,8 @@ class NewsFormType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->class,
             'intention' => 'news',
-            'domain_config' => null
+            'domain_config' => null,
+            'translator' => null
         ));
     }
 }
