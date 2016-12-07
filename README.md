@@ -1,4 +1,4 @@
-# SimpleNewsBundle v0.1.1
+# SimpleNewsBundle
 
 ## Composer
 	"repositories": [
@@ -134,8 +134,14 @@ use :
 ## Database
 	bin/console doctrine:schema:update    
 
-
-### Twig Extension
+## Service
+	// In controller
+	$newsManager = $this->get('vertacoo_simple_news.news_manager');
+    $news = $newsManager->findOneByDomain('my_domain');
+    $news = $newsManager->findByDomain('my_domain');
+    $news = $newsManager->find('news_id');
+    
+## Twig Extension
 For text properties :
 	`{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}`
 

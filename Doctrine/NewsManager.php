@@ -56,6 +56,9 @@ class NewsManager
     public function findOneByDomain($domain) {
         return $this->repository->findOneByDomain($domain);
     }
+    public function findByDomain($domain) {
+        return $this->repository->findByDomain($domain);
+    }
     public function findAll() {
         return $this->repository->findAll();
     }
