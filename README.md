@@ -14,7 +14,7 @@
     
 ## Create your News entity
 Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
-If you plan to use image uploading, you have to use VichUploaderBundle and name your image field : image, the vichUploader mapping is already configured in the bundle
+If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images)
 
 	namespace YourBundle\Entity;
 
@@ -25,7 +25,7 @@ If you plan to use image uploading, you have to use VichUploaderBundle and name 
 	
 	/**
 	 * @ORM\Entity
-	 * @ORM\Table(name="contact")
+	 * @ORM\Table(name="news")
 	 */
 	class News extends BaseNews
 	{
@@ -49,18 +49,6 @@ If you plan to use image uploading, you have to use VichUploaderBundle and name 
 	     */
 	    protected $body;
 	    
-	    /**
-	     * @ORM\Column(type="string", length=255)
-	     * @var string
-	     */
-	    protected $imageFileName;
-    
-    	/**
-	     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-	     * @var File
-	     */
-    	protected $image;
-	    
 	    public function getTitle()
 	    {
 	        return $this->title;
@@ -76,50 +64,6 @@ If you plan to use image uploading, you have to use VichUploaderBundle and name 
 	    {
 	        return $this->body;
 	    }
-	    
-	    public function setBody($body)
-	    {
-	        $this->body = $body;
-	        return $this;
-	    }
-	    public function setImage(File $image = null)
-	    {
-	        $this->imageFile = $image;
-	
-	        if ($image) {
-	            $this->updatedAt = new \DateTime('now');
-	        }
-	
-	        return $this;
-	    }
-	
-	    /**
-	     * @return File|null
-	     */
-	    public function getImage()
-	    {
-	        return $this->imageFile;
-	    }
-	
-	    /**
-	     * @param string $imageName
-	     *
-	     * @return Product
-	     */
-	    public function setImageFileName($imageFileName)
-	    {
-	        $this->imageName = $imageName;
-	
-	        return $this;
-	    }
-	
-	    /**
-	     * @return string|null
-	     */
-	    public function getImageFileName()
-	    {
-	        return $this->imageName;
-	    }
 	}
 	
 
@@ -134,6 +78,7 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	use Symfony\Component\Form\FormBuilderInterface;
 	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 	use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+	use Symfony\Component\Form\Extension\Core\Type\TextType;
 	
 	use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType as BaseType;
 	
@@ -143,11 +88,11 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	    public function buildForm(FormBuilderInterface $builder, array $options)
 	    {
 	        parent::buildForm($builder, $options);
-	        $builder->add('text',TextareaType::class);
-	        
-	        $builder->add('save', SubmitType::class, array(
-	            'label' => 'Enregistrer'
-	        ));
+	        $builder->add('title',TextType::class)
+	        		->add('body',TextareaType::class);
+	        		->add('save', SubmitType::class, array(
+					          'label' => 'Enregistrer'
+					      ));
 	    }
 	
 	    /**
@@ -175,13 +120,14 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	    entity: YourBundle\Entity\YourEntity
 	    domains: 
 	      my_domain_1: 
+	      	title: My title # it is the title which is displaying in the default admin template
 	        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
 	    update_template: 'HotelAdminBundle:News:update.html.twig'
     
 ## Routing
 	vertacoo_simple_news:
 	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
-	    prefix:   /admin/news
+	    prefix:   /news
 use :  
     `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
     
@@ -191,7 +137,10 @@ use :
 
 ### Twig Extension
 For text properties :
-	{{ vertacoo_news('my_domain_1','propertyName) }}
+	{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}
+Takes 3 arguments :
+- the domain name
+- the property you want to retrieve
+- the type of the propoerty (text|image)
 
-For image property:
-	{{ vertacoo_news('my_domain_1','imae) }}
+
