@@ -25,10 +25,7 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->children()
                                     ->scalarNode('form')->defaultValue("Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType")->end()
-                                    ->booleanNode('use_image')->defaultFalse()->end()
-                                    ->scalarNode('image_max_size')->defaultValue("1MO")->end()
-                                    ->integerNode('image_max_height')->defaultValue(600)->end()
-                                    ->integerNode('image_max_width')->defaultValue(800)->end()
+                                    ->scalarNode('title')->defaultValue('News')->end()
                                 ->end()
                             ->end()
                             ->defaultValue(array(
@@ -36,7 +33,6 @@ class Configuration implements ConfigurationInterface
                             ))
                         ->end()
                         ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->cannotBeEmpty()->end()
-                        ->scalarNode('upload_dir')->defaultValue('%kernel.root_dir%/../var/')->cannotBeEmpty()->end()
                     ->end();
         
         

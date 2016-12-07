@@ -1,6 +1,6 @@
 # SimpleNewsBundle v0.1.1
 
-### Composer
+## Composer
 	"repositories": [
         {
 	        "type" : "vcs",
@@ -9,31 +9,189 @@
     ]
     "simondest/simple-news-bundle" : "^0.1"
 
-### AppKernel.php
-	new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
-
-### Config :
-	vertacoo_simple_news:
-    upload_dir: "/uploads/news/"
-    entity: YourBundle\Entity\YourEntity	#default: Vertacoo\SimpleNewsBundle\Entity\News
-    domains: 
-      domain_1: 
-        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
-        use_image: true
-        image_max_size: "1M"	#default 1M
-        image_max_width: 800	#default 800
-        image_max_height: 600	#default 600
-    update_template: 'HotelAdminBundle:News:update.html.twig'
+## AppKernel.php
+    new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
     
-### Routing
+## Create your News entity
+Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
+If you plan to use image uploading, you have to use VichUploaderBundle and name your image field : image, the vichUploader mapping is already configured in the bundle
+
+	namespace YourBundle\Entity;
+
+	use Doctrine\ORM\Mapping as ORM;
+	use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
+	use Symfony\Component\HttpFoundation\File\File;
+	
+	
+	/**
+	 * @ORM\Entity
+	 * @ORM\Table(name="contact")
+	 */
+	class News extends BaseNews
+	{
+	    
+	    /**
+	     * @var int
+	     *
+	     * @ORM\Column(name="id", type="integer")
+	     * @ORM\Id
+	     * @ORM\GeneratedValue(strategy="AUTO")
+	     */
+	    protected $id;
+	    
+	    /**
+	     * @ORM\Column(type="string", length=255)
+	     */
+	    protected $title;
+	    
+	    /**
+	     * @ORM\Column(type="text")
+	     */
+	    protected $body;
+	    
+	    /**
+	     * @ORM\Column(type="string", length=255)
+	     * @var string
+	     */
+	    protected $imageFileName;
+    
+    	/**
+	     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+	     * @var File
+	     */
+    	protected $image;
+	    
+	    public function getTitle()
+	    {
+	        return $this->title;
+	    }
+	    
+	    public function setTitle($title)
+	    {
+	        $this->title = $title;
+	        return $this;
+	    }
+	    
+	    public function getBody()
+	    {
+	        return $this->body;
+	    }
+	    
+	    public function setBody($body)
+	    {
+	        $this->body = $body;
+	        return $this;
+	    }
+	    public function setImage(File $image = null)
+	    {
+	        $this->imageFile = $image;
+	
+	        if ($image) {
+	            $this->updatedAt = new \DateTime('now');
+	        }
+	
+	        return $this;
+	    }
+	
+	    /**
+	     * @return File|null
+	     */
+	    public function getImage()
+	    {
+	        return $this->imageFile;
+	    }
+	
+	    /**
+	     * @param string $imageName
+	     *
+	     * @return Product
+	     */
+	    public function setImageFileName($imageFileName)
+	    {
+	        $this->imageName = $imageName;
+	
+	        return $this;
+	    }
+	
+	    /**
+	     * @return string|null
+	     */
+	    public function getImageFileName()
+	    {
+	        return $this->imageName;
+	    }
+	}
+	
+
+
+## Create custom FormType
+If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
+
+#### FormType example :
+
+	namespace YourBundle\Form\Type;
+
+	use Symfony\Component\Form\FormBuilderInterface;
+	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+	use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+	
+	use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType as BaseType;
+	
+	class YourFormType extends BaseType
+	{
+	
+	    public function buildForm(FormBuilderInterface $builder, array $options)
+	    {
+	        parent::buildForm($builder, $options);
+	        $builder->add('text',TextareaType::class);
+	        
+	        $builder->add('save', SubmitType::class, array(
+	            'label' => 'Enregistrer'
+	        ));
+	    }
+	
+	    /**
+	     *
+	     * {@inheritdoc}
+	     *
+	     */
+	    public function getName()
+	    {
+	        return 'example_news_form';
+	    }
+	}
+	
+#### FormType service definition:
+
+	example.your_form_type:
+	    class: YourBundle\Form\Type\YourFormType
+	    tags:
+	        -  { name: form.type }
+	    arguments: ["%vertacoo_simple_news.entity%"]
+
+## Config :
+### SimpleNews
+	vertacoo_simple_news:
+	    entity: YourBundle\Entity\YourEntity
+	    domains: 
+	      my_domain_1: 
+	        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
+	    update_template: 'HotelAdminBundle:News:update.html.twig'
+    
+## Routing
 	vertacoo_simple_news:
 	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
 	    prefix:   /admin/news
-
-### Database
-	bin/console doctrine:schema:update    
 use :  
-    `url('vertacoo_simple_news_admin',{'domain':'domain'})`
+    `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
+    
+## Database
+	bin/console doctrine:schema:update    
+
 
 ### Twig Extension
-	{{ vertacoo_news('domain','propertyName) }}
+For text properties :
+	{{ vertacoo_news('my_domain_1','propertyName) }}
+
+For image property:
+	{{ vertacoo_news('my_domain_1','imae) }}

@@ -3,14 +3,6 @@ namespace Vertacoo\SimpleNewsBundle\Model;
 
 interface NewsInterface
 {
-    public function getTitle();
-
-    public function setTitle($title);
-
-    public function getBody();
-
-    public function setBody($body);
-
     public function getCreatedAt();
 
     public function setCreatedAt(\DateTime $created_at);
@@ -22,13 +14,4 @@ interface NewsInterface
     public function getDomain();
     
     public function setDomain($domain);
-    
-    public function getImage();
-    
-    public function setImage($image);
-    
-    public function getImageFileName();
-    
-    public function setImageFileName($image);
 }
-

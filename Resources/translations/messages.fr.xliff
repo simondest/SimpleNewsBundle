@@ -1,27 +1,10 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 	<file source-language="fr" datatype="plaintext" original="file.ext">
-		<body>
-			
-			<trans-unit id="vertacoo_simple_news.label.save">
-				<source>vertacoo_simple_news.label.save</source>
-				<target>Enregistrer</target>
-			</trans-unit>
+		<body>		
 			<trans-unit id="vertacoo_simplenews.label.news.created">
 				<source>vertacoo_simplenews.label.news.created</source>
 				<target>Date de création</target>
-			</trans-unit>
-			<trans-unit id="vertacoo_simplenews.label.news.title">
-				<source>vertacoo_simplenews.label.news.title</source>
-				<target>Titre</target>
-			</trans-unit>
-			<trans-unit id="vertacoo_simplenews.label.news.body">
-				<source>vertacoo_simplenews.label.news.body</source>
-				<target>Texte</target>
-			</trans-unit>
-			<trans-unit id="vertacoo_simplenews.label.news.translation">
-				<source>vertacoo_simplenews.label.news.translation</source>
-				<target>Traductions</target>
 			</trans-unit>
 			<trans-unit id="vertacoo_simplenews.flash.add">
 				<source>vertacoo_simplenews.flash.add</source>
@@ -31,11 +14,6 @@
 				<source>vertacoo_simplenews.flash.failed</source>
 				<target>Erreur lors de l'enregistrement, veuillez vérifier vos données.</target>
 			</trans-unit>
-			<trans-unit id="vertacoo_simplenews.help.news.image">
-				<source>vertacoo_simplenews.help.news.image</source>
-				<target><![CDATA[Tailles de l'image: Poids max %maxSize%, largeur max: %maxWidth% px, hauteur max: %maxHeight% px]]></target>
-			</trans-unit>
-			
 		</body>
 	</file>
 </xliff>

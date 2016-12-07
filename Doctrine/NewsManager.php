@@ -16,15 +16,13 @@ class NewsManager
         $metadata = $object_manager->getClassMetadata($class);
         $this->class = $metadata->getName();
     }
-    public function create($title = '', $body = '', $domain='default') {
-        $news = $this->build($title, $body, $domain);
+    public function create( $domain='default') {
+        $news = $this->build( $domain);
         $this->persist($news);
         return $news;
     }
-    public function build($title = '', $body = '', $domain='default') {
+    public function build( $domain='default') {
         $news = new $this->class;
-        $news->setTitle($title);
-        $news->setBody($body);
         $news->setdomain($domain);
         return $news;
     }
