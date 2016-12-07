@@ -11,7 +11,5 @@ interface NewsInterface
 
     public function setUpdatedAt(\DateTime $updated_at);
     
-    public function getDomain();
     
-    public function setDomain($domain);
 }

@@ -12,6 +12,28 @@
 ## AppKernel.php
     new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
     
+## Config :
+### SimpleNews
+Configure at least one domain with its entity and form
+```yaml
+vertacoo_simple_news:
+    entity: YourBundle\Entity\YourEntity
+    domains: 
+      my_domain_1: 
+      	entity: YourBundle\Entity\News
+      	title: My title # it is the title which is displaying in the default admin template
+        form: YourBundle\Form\Type\YourFormType 
+    update_template: 'HotelAdminBundle:News:update.html.twig'
+```    
+## Routing
+```yaml
+vertacoo_simple_news:
+    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+```	    
+use :  
+    `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
+        
 ## Create your News entity
 Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
 If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images)
@@ -69,7 +91,7 @@ class News extends BaseNews
 
 
 ## Create custom FormType
-If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
+Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
 
 #### FormType example :
 ````php
@@ -114,26 +136,7 @@ example.your_form_type:
         -  { name: form.type }
     arguments: ["%vertacoo_simple_news.entity%"]
 ```
-## Config :
-### SimpleNews
-```yaml
-vertacoo_simple_news:
-    entity: YourBundle\Entity\YourEntity
-    domains: 
-      my_domain_1: 
-      	title: My title # it is the title which is displaying in the default admin template
-        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
-    update_template: 'HotelAdminBundle:News:update.html.twig'
-```    
-## Routing
-```yaml
-vertacoo_simple_news:
-    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
-    prefix:   /news
-```	    
-use :  
-    `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
-    
+
 ## Database
 	bin/console doctrine:schema:update    
 

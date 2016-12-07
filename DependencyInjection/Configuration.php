@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->children()
                                     ->scalarNode('form')->defaultValue("Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType")->end()
+                                    ->scalarNode('entity')->cannotBeEmpty()->end()
                                     ->scalarNode('title')->defaultValue('News')->end()
                                 ->end()
                             ->end()

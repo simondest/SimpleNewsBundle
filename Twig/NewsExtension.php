@@ -25,17 +25,25 @@ class NewsExtension extends \Twig_Extension
         );
     }
 
-    public function news($domain, $what, $type='text')
+    public function news($domain, $what=null, $type='text')
     {
-        $news = $this->newsManager->findOneByDomain($domain);
+
+        $this->newsManager->setClass($domain);
+        
+        $news = $this->newsManager->findOne();
         if( null=== $news){
             return 'Auncune news pour ce domaine !';
+        }
+        
+        if($what == null){
+            return $news;
         }
 
         if($type=='image' && $this->uploader){ 
             $path = $this->uploader->asset($news, $what);
             return $path;
         }
+        
         else {
             $getter = 'get' . ucfirst($what);
             if (is_callable([$news, 'translate'])){

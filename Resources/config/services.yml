@@ -5,8 +5,7 @@ services:
          
     vertacoo_simple_news.news_manager: 
         class: Vertacoo\SimpleNewsBundle\Doctrine\NewsManager
-        arguments: ["@doctrine.orm.entity_manager", "%vertacoo_simple_news.entity%"]
-        
+        arguments: ["@doctrine.orm.entity_manager", "%vertacoo_simple_news.domains%"]
         
     vertacoo_simple_news.forms.news:
         class: Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
