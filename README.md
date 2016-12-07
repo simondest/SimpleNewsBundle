@@ -107,27 +107,30 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	}
 	
 #### FormType service definition:
-
-	example.your_form_type:
-	    class: YourBundle\Form\Type\YourFormType
-	    tags:
-	        -  { name: form.type }
-	    arguments: ["%vertacoo_simple_news.entity%"]
-
+```yaml
+example.your_form_type:
+    class: YourBundle\Form\Type\YourFormType
+    tags:
+        -  { name: form.type }
+    arguments: ["%vertacoo_simple_news.entity%"]
+```
 ## Config :
 ### SimpleNews
-	vertacoo_simple_news:
-	    entity: YourBundle\Entity\YourEntity
-	    domains: 
-	      my_domain_1: 
-	      	title: My title # it is the title which is displaying in the default admin template
-	        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
-	    update_template: 'HotelAdminBundle:News:update.html.twig'
-    
+```yaml
+vertacoo_simple_news:
+    entity: YourBundle\Entity\YourEntity
+    domains: 
+      my_domain_1: 
+      	title: My title # it is the title which is displaying in the default admin template
+        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
+    update_template: 'HotelAdminBundle:News:update.html.twig'
+```    
 ## Routing
-	vertacoo_simple_news:
-	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
-	    prefix:   /news
+```yaml
+vertacoo_simple_news:
+    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+```	    
 use :  
     `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
     
@@ -140,6 +143,7 @@ use :
     $news = $newsManager->findOneByDomain('my_domain');
     $news = $newsManager->findByDomain('my_domain');
     $news = $newsManager->find('news_id');
+    $news = $newsManager->findBy('news_id');
     
 ## Twig Extension
 For text properties :
