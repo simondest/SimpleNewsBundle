@@ -9,7 +9,7 @@ class NewsExtension extends \Twig_Extension
     protected $newsManager;
     protected $uploader;
 
-    public function __construct(NewsManager $newsManager, $uploader)
+    public function __construct(NewsManager $newsManager,  $uploader)
     {   
         $this->newsManager = $newsManager;
         $this->uploader = $uploader;
@@ -31,14 +31,19 @@ class NewsExtension extends \Twig_Extension
         if( null=== $news){
             return 'Auncune news pour ce domaine !';
         }
-        
-        if($what=='image'){
+
+        if($what=='image' && $this->uploader){ 
             $path = $this->uploader->asset($news, 'image');
             return $path;
         }
         else {
-            $field = 'get' . ucfirst($what);
-            return $news->$field();
+            $getter = 'get' . ucfirst($what);
+            if (is_callable([$news, 'translate'])){
+                return $news->translate()->$getter();
+            }
+            else {
+                return $news->$getter();
+            } 
         }
         
         

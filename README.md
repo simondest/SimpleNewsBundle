@@ -10,18 +10,17 @@
     "simondest/simple-news-bundle" : "^0.1"
 
 ## AppKernel.php
-	new Vich\UploaderBundle\VichUploaderBundle(),
-    new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
-    new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
     new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
     
 ## Create your News entity
+Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
+If you plan to use image uploading, you have to use VichUploaderBundle and name your image field : image, the vichUploader mapping is already configured in the bundle
 
 	namespace YourBundle\Entity;
 
 	use Doctrine\ORM\Mapping as ORM;
 	use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
-	use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+	use Symfony\Component\HttpFoundation\File\File;
 	
 	
 	/**
@@ -30,7 +29,6 @@
 	 */
 	class News extends BaseNews
 	{
-	    use ORMBehaviors\Translatable\Translatable;
 	    
 	    /**
 	     * @var int
@@ -40,22 +38,6 @@
 	     * @ORM\GeneratedValue(strategy="AUTO")
 	     */
 	    protected $id;
-	}
-	
-## Create your NewsTranslation entity	
-
-	namespace YourBundle\Entity;
-	
-	use Doctrine\ORM\Mapping as ORM;
-	use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-	
-	
-	/**
-	 * @ORM\Entity
-	 */
-	class NewsTranslation
-	{
-	    use ORMBehaviors\Translatable\Translation;
 	    
 	    /**
 	     * @ORM\Column(type="string", length=255)
@@ -66,6 +48,18 @@
 	     * @ORM\Column(type="text")
 	     */
 	    protected $body;
+	    
+	    /**
+	     * @ORM\Column(type="string", length=255)
+	     * @var string
+	     */
+	    protected $imageFileName;
+    
+    	/**
+	     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+	     * @var File
+	     */
+    	protected $image;
 	    
 	    public function getTitle()
 	    {
@@ -88,16 +82,59 @@
 	        $this->body = $body;
 	        return $this;
 	    }
+	    public function setImage(File $image = null)
+	    {
+	        $this->imageFile = $image;
+	
+	        if ($image) {
+	            $this->updatedAt = new \DateTime('now');
+	        }
+	
+	        return $this;
+	    }
+	
+	    /**
+	     * @return File|null
+	     */
+	    public function getImage()
+	    {
+	        return $this->imageFile;
+	    }
+	
+	    /**
+	     * @param string $imageName
+	     *
+	     * @return Product
+	     */
+	    public function setImageFileName($imageFileName)
+	    {
+	        $this->imageName = $imageName;
+	
+	        return $this;
+	    }
+	
+	    /**
+	     * @return string|null
+	     */
+	    public function getImageFileName()
+	    {
+	        return $this->imageName;
+	    }
 	}
+	
+
 
 ## Create custom FormType
 If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
 
 #### FormType example :
+
 	namespace YourBundle\Form\Type;
 
 	use Symfony\Component\Form\FormBuilderInterface;
 	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+	use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+	
 	use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType as BaseType;
 	
 	class YourFormType extends BaseType
@@ -106,21 +143,10 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	    public function buildForm(FormBuilderInterface $builder, array $options)
 	    {
 	        parent::buildForm($builder, $options);
-	        $builder->remove('createdAt');
-	        $builder->remove('title');
-	        $builder->remove('link');
+	        $builder->add('text',TextareaType::class);
 	        
-	        $builder->add('translations', 'A2lix\TranslationFormBundle\Form\Type\TranslationsType', array(
-	            'label' => 'vertacoo_simplenews.label.news.translation',
-	            // 'locales' => array('en'),
-	            'required' => false,
-	            'position' => array('before'=>'save'),
-	            'exclude_fields' => array('link','title')
-	            
-	        ));
 	        $builder->add('save', SubmitType::class, array(
-	            'label' => 'vertacoo_simple_news.label.save',
-	            'position' => 'last'
+	            'label' => 'Enregistrer'
 	        ));
 	    }
 	
@@ -134,51 +160,23 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	        return 'example_news_form';
 	    }
 	}
+	
 #### FormType service definition:
+
 	example.your_form_type:
 	    class: YourBundle\Form\Type\YourFormType
 	    tags:
 	        -  { name: form.type }
-	    arguments: ["%vertacoo_simple_news.entity%","@translator.default"]
+	    arguments: ["%vertacoo_simple_news.entity%"]
 
 ## Config :
 ### SimpleNews
 	vertacoo_simple_news:
-    entity: YourBundle\Entity\YourEntity
-    domains: 
-      my_domain_1: 
-        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
-        use_image: true
-        image_max_size: "1M"	#default 1M
-        image_max_width: 800	#default 800
-        image_max_height: 600	#default 600
-    update_template: 'HotelAdminBundle:News:update.html.twig'
-
-### Vichuploader    
-Vichuploader config:
-	vich_uploader:
-	    db_driver: orm
-	    mappings:
-	        news_image:
-	            uri_prefix:         /uploads/news
-	            upload_destination: '%kernel.root_dir%/../web/uploads/news'
-	            inject_on_load:     false
-	            delete_on_update:   true
-	            delete_on_remove:   true
-
-### Translations            
-Translations :
-
-	knp_doctrine_behaviors:
-	    translatable: true
-	  
-	a2lix_translation_form:
-	    locale_provider: default       
-	    locales: [en]      
-	    default_locale: en             
-	    required_locales: []         
-	    manager_registry: doctrine     
-	    templating: "A2lixTranslationFormBundle::default.html.twig"
+	    entity: YourBundle\Entity\YourEntity
+	    domains: 
+	      my_domain_1: 
+	        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
+	    update_template: 'HotelAdminBundle:News:update.html.twig'
     
 ## Routing
 	vertacoo_simple_news:
@@ -186,9 +184,14 @@ Translations :
 	    prefix:   /admin/news
 use :  
     `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
+    
 ## Database
 	bin/console doctrine:schema:update    
 
 
 ### Twig Extension
+For text properties :
 	{{ vertacoo_news('my_domain_1','propertyName) }}
+
+For image property:
+	{{ vertacoo_news('my_domain_1','imae) }}
