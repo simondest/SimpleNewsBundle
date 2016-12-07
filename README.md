@@ -137,7 +137,7 @@ use :
 
 ### Twig Extension
 For text properties :
-	{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}
+	`{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}`
 Takes 3 arguments :
 - the domain name
 - the property you want to retrieve
