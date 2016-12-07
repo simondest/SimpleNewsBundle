@@ -15,64 +15,64 @@
 ## Create your News entity
 Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
 If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images)
+````php
+namespace YourBundle\Entity;
 
-	namespace YourBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
+use Symfony\Component\HttpFoundation\File\File;
 
-	use Doctrine\ORM\Mapping as ORM;
-	use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
-	use Symfony\Component\HttpFoundation\File\File;
-	
-	
-	/**
-	 * @ORM\Entity
-	 * @ORM\Table(name="news")
-	 */
-	class News extends BaseNews
-	{
-	    
-	    /**
-	     * @var int
-	     *
-	     * @ORM\Column(name="id", type="integer")
-	     * @ORM\Id
-	     * @ORM\GeneratedValue(strategy="AUTO")
-	     */
-	    protected $id;
-	    
-	    /**
-	     * @ORM\Column(type="string", length=255)
-	     */
-	    protected $title;
-	    
-	    /**
-	     * @ORM\Column(type="text")
-	     */
-	    protected $body;
-	    
-	    public function getTitle()
-	    {
-	        return $this->title;
-	    }
-	    
-	    public function setTitle($title)
-	    {
-	        $this->title = $title;
-	        return $this;
-	    }
-	    
-	    public function getBody()
-	    {
-	        return $this->body;
-	    }
-	}
-	
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="news")
+ */
+class News extends BaseNews
+{
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $title;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $body;
+    
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+    
+    public function getBody()
+    {
+        return $this->body;
+    }
+}
+```	
 
 
 ## Create custom FormType
 If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
 
 #### FormType example :
-
+````php
 	namespace YourBundle\Form\Type;
 
 	use Symfony\Component\Form\FormBuilderInterface;
@@ -105,7 +105,7 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	        return 'example_news_form';
 	    }
 	}
-	
+```	
 #### FormType service definition:
 ```yaml
 example.your_form_type:
@@ -137,14 +137,15 @@ use :
 ## Database
 	bin/console doctrine:schema:update    
 
-## Service
+## Service`
+````php
 	// In controller
 	$newsManager = $this->get('vertacoo_simple_news.news_manager');
     $news = $newsManager->findOneByDomain('my_domain');
     $news = $newsManager->findByDomain('my_domain');
     $news = $newsManager->find('news_id');
     $news = $newsManager->findBy('news_id');
-    
+```    
 ## Twig Extension
 For text properties :
 	`{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}`
