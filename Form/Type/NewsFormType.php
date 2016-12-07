@@ -8,14 +8,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsFormType extends AbstractType
 {
@@ -35,8 +28,6 @@ class NewsFormType extends AbstractType
         $builder->add('createdAt', DateTimeType::class, array(
             'label' => 'vertacoo_simplenews.label.news.created'
         ));
-
-            
     }
     
     public function buildView(FormView $view, FormInterface $form, array $options)

@@ -3,7 +3,6 @@ namespace Vertacoo\SimpleNewsBundle\Model;
 
 interface NewsInterface
 {
-    
     public function getCreatedAt();
 
     public function setCreatedAt(\DateTime $created_at);
@@ -15,7 +14,4 @@ interface NewsInterface
     public function getDomain();
     
     public function setDomain($domain);
-    
-    
 }
-

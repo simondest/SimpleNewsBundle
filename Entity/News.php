@@ -3,20 +3,13 @@ namespace Vertacoo\SimpleNewsBundle\Entity;
 
 use Vertacoo\SimpleNewsBundle\Model\NewsInterface;
 
-class News implements NewsInterface
+class News implements NewsInterface 
 {
-    
-    
-
     protected $createdAt;
 
     protected $updatedAt;
 
     protected $domain;
-
-    
-    
-    
 
     public function __construct()
     {
@@ -24,7 +17,6 @@ class News implements NewsInterface
     }
 
    
-
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -57,8 +49,6 @@ class News implements NewsInterface
         $this->domain = $domain;
         return $this;
     }
-
-    
 }
 
 
