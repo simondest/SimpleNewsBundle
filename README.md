@@ -1,4 +1,4 @@
-# SimpleNewsBundle v0.1.1
+# SimpleNewsBundle
 
 ## Composer
 	"repositories": [
@@ -12,128 +12,95 @@
 ## AppKernel.php
     new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
     
+## Config :
+### SimpleNews
+Configure at least one domain with its entity and form
+```yaml
+vertacoo_simple_news:
+    entity: YourBundle\Entity\YourEntity
+    domains: 
+      my_domain_1: 
+      	entity: YourBundle\Entity\News
+      	title: My title # it is the title which is displaying in the default admin template
+        form: YourBundle\Form\Type\YourFormType 
+    update_template: 'HotelAdminBundle:News:update.html.twig'
+```    
+## Routing
+```yaml
+vertacoo_simple_news:
+    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+```	    
+use :  
+    `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
+        
 ## Create your News entity
 Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
-If you plan to use image uploading, you have to use VichUploaderBundle and name your image field : image, the vichUploader mapping is already configured in the bundle
+If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images)
+````php
+namespace YourBundle\Entity;
 
-	namespace YourBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
+use Symfony\Component\HttpFoundation\File\File;
 
-	use Doctrine\ORM\Mapping as ORM;
-	use Vertacoo\SimpleNewsBundle\Entity\News as BaseNews;
-	use Symfony\Component\HttpFoundation\File\File;
-	
-	
-	/**
-	 * @ORM\Entity
-	 * @ORM\Table(name="contact")
-	 */
-	class News extends BaseNews
-	{
-	    
-	    /**
-	     * @var int
-	     *
-	     * @ORM\Column(name="id", type="integer")
-	     * @ORM\Id
-	     * @ORM\GeneratedValue(strategy="AUTO")
-	     */
-	    protected $id;
-	    
-	    /**
-	     * @ORM\Column(type="string", length=255)
-	     */
-	    protected $title;
-	    
-	    /**
-	     * @ORM\Column(type="text")
-	     */
-	    protected $body;
-	    
-	    /**
-	     * @ORM\Column(type="string", length=255)
-	     * @var string
-	     */
-	    protected $imageFileName;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="news")
+ */
+class News extends BaseNews
+{
     
-    	/**
-	     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-	     * @var File
-	     */
-    	protected $image;
-	    
-	    public function getTitle()
-	    {
-	        return $this->title;
-	    }
-	    
-	    public function setTitle($title)
-	    {
-	        $this->title = $title;
-	        return $this;
-	    }
-	    
-	    public function getBody()
-	    {
-	        return $this->body;
-	    }
-	    
-	    public function setBody($body)
-	    {
-	        $this->body = $body;
-	        return $this;
-	    }
-	    public function setImage(File $image = null)
-	    {
-	        $this->imageFile = $image;
-	
-	        if ($image) {
-	            $this->updatedAt = new \DateTime('now');
-	        }
-	
-	        return $this;
-	    }
-	
-	    /**
-	     * @return File|null
-	     */
-	    public function getImage()
-	    {
-	        return $this->imageFile;
-	    }
-	
-	    /**
-	     * @param string $imageName
-	     *
-	     * @return Product
-	     */
-	    public function setImageFileName($imageFileName)
-	    {
-	        $this->imageName = $imageName;
-	
-	        return $this;
-	    }
-	
-	    /**
-	     * @return string|null
-	     */
-	    public function getImageFileName()
-	    {
-	        return $this->imageName;
-	    }
-	}
-	
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $title;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $body;
+    
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+    
+    public function getBody()
+    {
+        return $this->body;
+    }
+}
+```	
 
 
 ## Create custom FormType
-If you defined domain.form (see at Config paragraph) create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
+Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
 
 #### FormType example :
-
+````php
 	namespace YourBundle\Form\Type;
 
 	use Symfony\Component\Form\FormBuilderInterface;
 	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 	use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+	use Symfony\Component\Form\Extension\Core\Type\TextType;
 	
 	use Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType as BaseType;
 	
@@ -143,11 +110,11 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	    public function buildForm(FormBuilderInterface $builder, array $options)
 	    {
 	        parent::buildForm($builder, $options);
-	        $builder->add('text',TextareaType::class);
-	        
-	        $builder->add('save', SubmitType::class, array(
-	            'label' => 'Enregistrer'
-	        ));
+	        $builder->add('title',TextType::class)
+	        		->add('body',TextareaType::class);
+	        		->add('save', SubmitType::class, array(
+					          'label' => 'Enregistrer'
+					      ));
 	    }
 	
 	    /**
@@ -160,38 +127,35 @@ If you defined domain.form (see at Config paragraph) create the form type that m
 	        return 'example_news_form';
 	    }
 	}
-	
+```	
 #### FormType service definition:
+```yaml
+example.your_form_type:
+    class: YourBundle\Form\Type\YourFormType
+    tags:
+        -  { name: form.type }
+    arguments: ["%vertacoo_simple_news.entity%"]
+```
 
-	example.your_form_type:
-	    class: YourBundle\Form\Type\YourFormType
-	    tags:
-	        -  { name: form.type }
-	    arguments: ["%vertacoo_simple_news.entity%"]
-
-## Config :
-### SimpleNews
-	vertacoo_simple_news:
-	    entity: YourBundle\Entity\YourEntity
-	    domains: 
-	      my_domain_1: 
-	        form: YourBundle\Form\Type\YourFormType #default : Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType
-	    update_template: 'HotelAdminBundle:News:update.html.twig'
-    
-## Routing
-	vertacoo_simple_news:
-	    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
-	    prefix:   /admin/news
-use :  
-    `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
-    
 ## Database
 	bin/console doctrine:schema:update    
 
-
-### Twig Extension
+## Service`
+````php
+	// In controller
+	$newsManager = $this->get('vertacoo_simple_news.news_manager');
+    $news = $newsManager->findOneByDomain('my_domain');
+    $news = $newsManager->findByDomain('my_domain');
+    $news = $newsManager->find('news_id');
+    $news = $newsManager->findBy('news_id');
+```    
+## Twig Extension
 For text properties :
-	{{ vertacoo_news('my_domain_1','propertyName) }}
+	`{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}`
 
-For image property:
-	{{ vertacoo_news('my_domain_1','imae) }}
+Takes 3 arguments :
+- the domain name
+- the property you want to retrieve
+- the type of the propoerty (text|image)
+
+

@@ -9,7 +9,6 @@ class News implements NewsInterface
 
     protected $updatedAt;
 
-    protected $domain;
 
     public function __construct()
     {
@@ -39,16 +38,6 @@ class News implements NewsInterface
         return $this;
     }
 
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-        return $this;
-    }
     
     
 }

@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Vertacoo\SimpleNewsBundle\Form\Factory;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Form\FormTypeInterface;
+
 /**
  * Form factory class.
  *
@@ -21,37 +21,42 @@ use Symfony\Component\Form\FormTypeInterface;
  */
 class FormFactory
 {
+
     /**
+     *
      * @var FormFactoryInterface
      */
     private $formFactory;
 
+    /**
+     *
+     * @var array
+     */
+    private $domainsConfig;
 
     /**
-     * @var array 
-     */
-    
-    private $domainsConfig;
-    
-    /**
-     * 
+     *
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
     private $requestStack;
 
     private $translator;
-    
+
     /**
      * Constructor.
      *
-     * @param FormFactoryInterface                             $formFactory      A form factory instance
-     * @param string|int                                       $name             The name of the form
-     * @param string|\Symfony\Component\Form\FormTypeInterface $type             The type of the form
-     * @param array                                            $validationGroups An array of validation groups
+     * @param FormFactoryInterface $formFactory
+     *            A form factory instance
+     * @param string|int $name
+     *            The name of the form
+     * @param string|\Symfony\Component\Form\FormTypeInterface $type
+     *            The type of the form
+     * @param array $validationGroups
+     *            An array of validation groups
      */
-    public function __construct(FormFactoryInterface $formFactory, array $domainsConfig,RequestStack $requestStack, $translator)
+    public function __construct(FormFactoryInterface $formFactory, array $domainsConfig, RequestStack $requestStack, $translator)
     {
-        $this->formFactory      = $formFactory;
+        $this->formFactory = $formFactory;
         $this->translator = $translator;
         $this->domainsConfig = $domainsConfig;
         $this->requestStack = $requestStack;
@@ -61,8 +66,9 @@ class FormFactory
     /**
      * Creates a form and returns it.
      *
-     * @param mixed $data The initial data, optional
-     *
+     * @param mixed $data
+     *            The initial data, optional
+     *            
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createForm($data = null)
@@ -70,7 +76,13 @@ class FormFactory
         $request = $this->requestStack->getCurrentRequest();
         
         $domainConfig = $this->domainsConfig[$request->attributes->get('domain')];
-        $this->type = $domainConfig['form'];
-        return $this->formFactory->create( $this->type, $data, array('domain_config'=>$domainConfig));
+        $type = $domainConfig['form'];
+        $entity = $domainConfig['entity'];
+        
+        return $this->formFactory->create($type, $data, array(
+            'domain_config' => $domainConfig,
+            'data_class' => $entity
+        ));
+       
     }
 }

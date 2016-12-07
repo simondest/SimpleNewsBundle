@@ -1,5 +1,0 @@
-<vich_uploader class="Vertacoo\SimpleNewsBundle\Entity\News">
-  <field mapping="news_image" name="image" filename_property="imageFileName" />
-</vich_uploader>
-
-

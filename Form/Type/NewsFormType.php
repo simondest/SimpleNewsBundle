@@ -19,6 +19,7 @@ class NewsFormType extends AbstractType
     {
         $this->class = $class;
     }
+    
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
