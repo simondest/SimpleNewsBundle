@@ -25,15 +25,15 @@ class NewsExtension extends \Twig_Extension
         );
     }
 
-    public function news($domain, $what)
+    public function news($domain, $what, $type='text')
     {
         $news = $this->newsManager->findOneByDomain($domain);
         if( null=== $news){
             return 'Auncune news pour ce domaine !';
         }
 
-        if($what=='image' && $this->uploader){ 
-            $path = $this->uploader->asset($news, 'image');
+        if($type=='image' && $this->uploader){ 
+            $path = $this->uploader->asset($news, $what);
             return $path;
         }
         else {
