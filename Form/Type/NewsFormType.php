@@ -15,12 +15,9 @@ class NewsFormType extends AbstractType
 
     protected $class;
 
-    protected $translator;
-
-    public function __construct($class, Translator $translator)
+    public function __construct($class)
     {
         $this->class = $class;
-        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -59,8 +56,7 @@ class NewsFormType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->class,
             'intention' => 'news',
-            'domain_config' => null,
-            'translator' => null
+            'domain_config' => null
         ));
     }
 }

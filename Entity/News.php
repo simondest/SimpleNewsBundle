@@ -49,6 +49,8 @@ class News implements NewsInterface
         $this->domain = $domain;
         return $this;
     }
+    
+    
 }
 
 

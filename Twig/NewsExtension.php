@@ -2,7 +2,6 @@
 namespace Vertacoo\SimpleNewsBundle\Twig;
 
 use Vertacoo\SimpleNewsBundle\Doctrine\NewsManager;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class NewsExtension extends \Twig_Extension
 {
@@ -10,7 +9,7 @@ class NewsExtension extends \Twig_Extension
     protected $newsManager;
     protected $uploader;
 
-    public function __construct(NewsManager $newsManager, UploaderHelper $uploader)
+    public function __construct(NewsManager $newsManager,  $uploader)
     {   
         $this->newsManager = $newsManager;
         $this->uploader = $uploader;
@@ -33,14 +32,18 @@ class NewsExtension extends \Twig_Extension
             return 'Auncune news pour ce domaine !';
         }
 
-        if($what=='image' && $this->uploader){
-            
-;            $path = $this->uploader->asset($news, 'image');
+        if($what=='image' && $this->uploader){ 
+            $path = $this->uploader->asset($news, 'image');
             return $path;
         }
         else {
             $getter = 'get' . ucfirst($what);
-            return $news->translate()->$getter();
+            if (is_callable([$news, 'translate'])){
+                return $news->translate()->$getter();
+            }
+            else {
+                return $news->$getter();
+            } 
         }
         
         
