@@ -18,9 +18,3 @@ services:
         tags:
              - { name: 'twig.extension' }
         arguments: ["@vertacoo_simple_news.news_manager","@?vich_uploader.templating.helper.uploader_helper"]
-        
-    vertacoo_simple_news.form.extension.help:
-        class: Vertacoo\SimpleNewsBundle\Form\Extension\HelpTypeExtension
-        arguments: []
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
