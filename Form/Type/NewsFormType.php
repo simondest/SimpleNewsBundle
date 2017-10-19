@@ -9,13 +9,14 @@ use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Translation\Translator;
+use Vertacoo\SimpleNewsBundle\Entity\News;
 
 class NewsFormType extends AbstractType
 {
 
     protected $class;
 
-    public function __construct($class)
+    public function __construct(News $class)
     {
         $this->class = $class;
     }
