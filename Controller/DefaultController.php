@@ -1,22 +1,27 @@
 <?php
 namespace Vertacoo\SimpleNewsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Vertacoo\SimpleNewsBundle\Entity\News;
+use Symfony\Component\Routing\Annotation\Route;
+use Vertacoo\SimpleNewsBundle\Doctrine\NewsManager;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
-
-    public function updateAction(Request $request, $domain)
+    /**
+     * @Route("/update/{domain}", name="vertacoo_simple_news_admin")
+     */
+    
+    public function update(Request $request, $domain, NewsManager $newsManager)
     {
         
-        $manager = $this->getNewsManager();
-        $manager->setClass($domain);
+       // $manager = $this->getNewsManager();
+        $newsManager->setClass($domain);
         
-        $news = $manager->findAll();
+        $news = $newsManager->findAll();
         if(!$news){
-            $news = $manager->build();
+            $news = $newsManager->build();
         }
         else {
             $news = $news[0];

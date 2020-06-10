@@ -12,9 +12,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
 
-    /**
-     * @ERROR!!!
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('vertacoo_simple_news');
