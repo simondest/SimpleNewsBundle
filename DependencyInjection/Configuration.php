@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('simple_news');
         $rootNode = $treeBuilder->root('vertacoo_simple_news');
         $rootNode->children()
                         ->scalarNode('entity')->defaultValue('Vertacoo\SimpleNewsBundle\Entity\News')->end()
