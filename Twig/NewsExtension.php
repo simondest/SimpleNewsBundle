@@ -2,8 +2,10 @@
 namespace Vertacoo\SimpleNewsBundle\Twig;
 
 use Vertacoo\SimpleNewsBundle\Doctrine\NewsManager;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class NewsExtension extends \Twig_Extension
+class NewsExtension extends AbstractExtension
 {
 
     protected $newsManager;
@@ -18,7 +20,7 @@ class NewsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'file' => new \Twig_SimpleFunction('vertacoo_news', [
+            'file' => new TwigFunction('vertacoo_news', [
                 $this,
                 'news'
             ])
