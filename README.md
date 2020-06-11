@@ -28,9 +28,8 @@ vertacoo_simple_news:
 ## Routing
 ```yaml
 vertacoo_simple_news:
-    resource: '@VertacooSimpleNewsBundle/Controller/DefaultController.php'
+    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
     prefix:   /news
-    type: annotation
 ```	    
 use :  
     `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`

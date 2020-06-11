@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Vertacoo\SimpleNewsBundle\Entity\News;
 use Symfony\Component\Routing\Annotation\Route;
 use Vertacoo\SimpleNewsBundle\Doctrine\NewsManager;
+use Vertacoo\SimpleNewsBundle\Form\Factory\FormFactory;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
@@ -13,7 +15,7 @@ class DefaultController extends AbstractController
      * @Route("/update/{domain}", name="vertacoo_simple_news_admin")
      */
     
-    public function update(Request $request, $domain, NewsManager $newsManager)
+    public function update(Request $request, $domain, NewsManager $newsManager, FormFactory $formFactory, TranslatorInterface $translator)
     {
         
        // $manager = $this->getNewsManager();
@@ -27,13 +29,12 @@ class DefaultController extends AbstractController
             $news = $news[0];
         }
         
-        $form = $this->get('vertacoo_simple_news.form_factory')->createForm($news);
+        $form = $formFactory->createForm($news);
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            $translator = $this->get('translator');
             if ($form->isValid()) {
-                $manager->persist($news);
+                $newsManager->persist($news);
                 $this->addFlash('success', $translator->trans('vertacoo_simplenews.flash.add'));
                 return $this->redirect($request->getUri());
             }
@@ -42,12 +43,9 @@ class DefaultController extends AbstractController
             }
         }
        
-        return $this->render($this->container->getParameter('vertacoo_simple_news.update_template'), array(
+        return $this->render($this->getParameter('vertacoo_simple_news.update_template'), array(
             'form' => $form->createView()
         ));
     }
-    
-    private function getNewsManager() {
-        return $this->get('vertacoo_simple_news.news_manager');
-    }
+
 }
