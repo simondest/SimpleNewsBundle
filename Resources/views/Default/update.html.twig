@@ -1,4 +1,4 @@
-<h1>Mise à jour des News</h1>
+<h1>{{ title }}</h1>
 <div>
 {% for flash_message in app.session.flashBag.get('success') %}
 	{{ flash_message }}

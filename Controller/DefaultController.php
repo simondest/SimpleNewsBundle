@@ -44,7 +44,8 @@ class DefaultController extends AbstractController
         $config = $this->getParameter('vertacoo_simple_news.domains');
         $tpl = $config[$domain]['update_template'];
         return $this->render($tpl, array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title' => $config[$domain]['title'],
         ));
     }
 
