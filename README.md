@@ -87,7 +87,7 @@ class News extends BaseNews
         return $this->body;
     }
 }
-```	
+````	
 
 
 ## Create custom FormType
