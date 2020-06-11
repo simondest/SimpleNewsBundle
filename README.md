@@ -127,15 +127,15 @@ Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsF
 	        return 'example_news_form';
 	    }
 	}
-```	
+````
 #### FormType service definition:
-```yaml
+````yaml
 example.your_form_type:
     class: YourBundle\Form\Type\YourFormType
     tags:
         -  { name: form.type }
     arguments: ["%vertacoo_simple_news.entity%"]
-```
+````
 
 ## Database
 	bin/console doctrine:schema:update    
@@ -148,7 +148,7 @@ example.your_form_type:
     $news = $newsManager->findByDomain('my_domain');
     $news = $newsManager->find('news_id');
     $news = $newsManager->findBy('news_id');
-```    
+````   
 ## Twig Extension
 For text properties :
 	`{{ vertacoo_news('my_domain_1','propertyName','propertyType') }}`
