@@ -7,7 +7,7 @@
 	        "url" : "https://github.com/simondest/SimpleNewsBundle.git"
 	    }
     ]
-    "simondest/simple-news-bundle" : "^0.1"
+    "simondest/simple-news-bundle" : "dev-master"
 
 ## AppKernel.php
     new Vertacoo\SimpleNewsBundle\VertacooSimpleNewsBundle(),
