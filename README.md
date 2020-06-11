@@ -17,19 +17,19 @@
 Configure at least one domain with its entity and form
 ```yaml
 vertacoo_simple_news:
-    entity: YourBundle\Entity\YourEntity
     domains: 
       my_domain_1: 
       	entity: YourBundle\Entity\News
       	title: My title # it is the title which is displaying in the default admin template
         form: YourBundle\Form\Type\YourFormType 
-    update_template: 'HotelAdminBundle:News:update.html.twig'
+    update_template: 'YourBundle:News:update.html.twig'
 ```    
 ## Routing
 ```yaml
 vertacoo_simple_news:
-    resource: "@VertacooSimpleNewsBundle/Resources/config/routing.yml"
-    prefix:   /news
+    resource: '@VertacooSimpleNewsBundle/Controller/DefaultController.php'
+    prefix:   /admin/news
+    type: annotation
 ```	    
 use :  
     `url('vertacoo_simple_news_admin',{'domain':'my_domain_1'})`
