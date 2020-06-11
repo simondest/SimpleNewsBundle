@@ -24,13 +24,13 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('form')->defaultValue("Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType")->end()
                                     ->scalarNode('entity')->cannotBeEmpty()->end()
                                     ->scalarNode('title')->defaultValue('News')->end()
+                                    ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->end()
                                 ->end()
                             ->end()
                             ->defaultValue(array(
                                 'Default'
                             ))
                         ->end()
-                        ->scalarNode('update_template')->defaultValue('VertacooSimpleNewsBundle:Default:update.html.twig')->cannotBeEmpty()->end()
                     ->end();
         
         

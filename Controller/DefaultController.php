@@ -18,7 +18,6 @@ class DefaultController extends AbstractController
     public function update(Request $request, $domain, NewsManager $newsManager, FormFactory $formFactory, TranslatorInterface $translator)
     {
         
-       // $manager = $this->getNewsManager();
         $newsManager->setClass($domain);
         
         $news = $newsManager->findAll();
@@ -42,8 +41,9 @@ class DefaultController extends AbstractController
                 $this->addFlash('error', $translator->trans('vertacoo_simplenews.flash.failed'));
             }
         }
-       
-        return $this->render($this->getParameter('vertacoo_simple_news.update_template'), array(
+        $config = $this->getParameter('vertacoo_simple_news.domains');
+        $tpl = $config[$domain]['update_template'];
+        return $this->render($tpl, array(
             'form' => $form->createView()
         ));
     }
