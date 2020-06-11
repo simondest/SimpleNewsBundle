@@ -140,7 +140,7 @@ example.your_form_type:
 ## Database
 	bin/console doctrine:schema:update    
 
-## Service`
+## Service
 ````php
 	// In controller
 	$newsManager = $this->get('vertacoo_simple_news.news_manager');
