@@ -134,7 +134,6 @@ example.your_form_type:
     class: YourBundle\Form\Type\YourFormType
     tags:
         -  { name: form.type }
-    arguments: ["%vertacoo_simple_news.entity%"]
 ```
 
 ## Database
