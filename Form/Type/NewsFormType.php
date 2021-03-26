@@ -14,13 +14,7 @@ use Vertacoo\SimpleNewsBundle\Entity\News;
 class NewsFormType extends AbstractType
 {
 
-    protected $class;
-
-    public function __construct(News $class)
-    {
-        $this->class = $class;
-    }
-    
+   
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -56,7 +50,6 @@ class NewsFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
             'intention' => 'news',
             'domain_config' => null
         ));
