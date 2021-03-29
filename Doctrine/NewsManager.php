@@ -1,7 +1,7 @@
 <?php
 namespace Vertacoo\SimpleNewsBundle\Doctrine;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Vertacoo\SimpleNewsBundle\Model\NewsInterface;
 
 class NewsManager
@@ -16,11 +16,10 @@ class NewsManager
     protected $domainsConfig;
 
 
-    public function __construct(ObjectManager $object_manager, $domainsConfig)
+    public function __construct(EntityManagerInterface $object_manager, $domainsConfig)
     {
         $this->objectManager = $object_manager;
-        //$this->repository = $object_manager->getRepository($class);
-        //$metadata = $object_manager->getClassMetadata($class);
+        
         $this->domainsConfig = $domainsConfig;
     }
 
