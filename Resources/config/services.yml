@@ -20,7 +20,7 @@ services:
         class: Vertacoo\SimpleNewsBundle\Twig\NewsExtension
         tags:
              - { name: 'twig.extension' }
-        arguments: ['@Vertacoo\SimpleNewsBundle\Doctrine\NewsManager',"@?vich_uploader.templating.helper.uploader_helper"]
+        arguments: ['@Vertacoo\SimpleNewsBundle\Doctrine\NewsManager','@?Vich\UploaderBundle\Templating\Helper\UploaderHelper']
         
     Vertacoo\SimpleNewsBundle\Controller\DefaultController:
         class: Vertacoo\SimpleNewsBundle\Controller\DefaultController
