@@ -36,7 +36,7 @@ use :
         
 ## Create your News entity.
 Create a doctrine entity in your bundle extending Vertacoo\SimpleNewsBundle\Entity\News
-If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images)
+If you plan to use images you must use vichUloaderBundle (the simpleNews twig extension need this to get the right path for the images).
 ````php
 namespace YourBundle\Entity;
 
@@ -91,7 +91,7 @@ class News extends BaseNews
 
 
 ## Create custom FormType
-Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service
+Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsFormType and add it as a service :
 
 #### FormType example :
 ````php
