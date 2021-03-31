@@ -22,7 +22,7 @@ vertacoo_simple_news:
       	entity: YourBundle\Entity\News
       	title: My title # it is the title which is displaying in the default admin template
         form: YourBundle\Form\Type\YourFormType 
-    	update_template: 'YourBundle:News:update.html.twig'
+    		update_template: 'YourBundle:News:update.html.twig'
 ```    
 ## Routing
 ```yaml
