@@ -14,7 +14,7 @@
     
 ## Config :
 ### SimpleNews
-Configure at least one domain with its entity and form
+Configure at least one domain with its entity and form : 
 ```yaml
 vertacoo_simple_news:
     domains: 
