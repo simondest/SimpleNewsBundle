@@ -128,7 +128,7 @@ Create the form type that must extends Vertacoo\SimpleNewsBundle\Form\Type\NewsF
 	    }
 	}
 ````
-#### FormType service definition:
+#### FormType service definition :
 ````yaml
 example.your_form_type:
     class: YourBundle\Form\Type\YourFormType
@@ -137,10 +137,10 @@ example.your_form_type:
     arguments: ["%vertacoo_simple_news.entity%"]
 ````
 
-## Database
+## Database :
 	bin/console doctrine:schema:update    
 
-## Service
+## Service :
 ````php
 	// In controller
 	$newsManager = $this->get('vertacoo_simple_news.news_manager');
